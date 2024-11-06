@@ -1,0 +1,36 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay=
+      routes:
+        - id: employee-service
+          uri: lb://employee-service
+          predicates:
+            - Path=/api/employee/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payment/**
+  security.oauth2:
+    resourceserver:
+      jwt:
+        jwk-set-uri: http://localhost:8080/realms/demo/protocol/openid-connect/certs
+    client:
+      provider:
+        keycloak:
+          issuer-uri: http://localhost:8080/realms/demo
+      registration:
+        spring-with-test-scope:
+          provider: keycloak
+          client-id: spring-with-test-scope
+          client-secret: VcVJrjRWBYkmOekJWyUuIRfCmV0BdEfS
+          authorization-grant-type: authorization_code
+          scope: openid
+eureka:
+  instance:
+    hostname: localhost
