@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.domain.Employee;
 import com.example.domain.EmployeeRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,10 @@ import java.util.List;
 @RequestMapping("/api/employee")
 @Transactional
 public class EmployeeController {
+
+    @Value("${user.role}")
+    private String role;
+
     private final EmployeeRepository employeeRepository;
 
     public EmployeeController(EmployeeRepository employeeRepository) {
