@@ -13,5 +13,6 @@ public class ClientController {
     @GetMapping(value = "/token")
     public Mono<String> getHome(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         return Mono.just(authorizedClient.getAccessToken().getTokenValue());
+        //some comment
     }
 }
